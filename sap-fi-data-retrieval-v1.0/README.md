@@ -5,6 +5,7 @@ This example application illustrates how to use Mule ESB to build a simple HTTP 
 
 ### Assumptions
 
+- You are familiar with Mule ESB, the [Anypoint Studio interface](http://www.mulesoft.org/documentation/display/current/Anypoint+Studio+Essentials).
 - A working knowledge of the SAP business context and in particular, the SAP R/3 Business Suite.
 - A basic understanding of the SAP NetWeaver Platform from an administration point of view.
 - Some fundamental knowledge of the ABAP language.
