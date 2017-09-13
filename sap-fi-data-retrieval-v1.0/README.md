@@ -9,7 +9,7 @@ This example application illustrates how to use Mule ESB to build a simple HTTP 
 - A working knowledge of the SAP business context and in particular, the SAP R/3 Business Suite.
 - A basic understanding of the SAP NetWeaver Platform from an administration point of view.
 - Some fundamental knowledge of the ABAP language.
-- SAP JCO which your download from SAP.
+- SAP JCO which downloaded from SAP.
 
 
 
