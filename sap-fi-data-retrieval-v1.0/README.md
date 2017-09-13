@@ -5,7 +5,12 @@ This example application illustrates how to use Mule ESB to build a simple HTTP 
 
 ### Assumptions
 
-This document describes the details of the example within the context of Anypoint Studio, Mule ESB graphical user interface (GUI).
+- A working knowledge of the SAP business context and in particular, the SAP R/3 Business Suite.
+- A basic understanding of the SAP NetWeaver Platform from an administration point of view.
+- Some fundamental knowledge of the ABAP language.
+- SAP JCO which your download from SAP.
+
+
 
 ### Example Use Case
 
@@ -17,7 +22,7 @@ You can create the applications straight out of the box in Anypoint Studio. You 
 
 Follow the procedure below to create, then run the **SAP FI data retrieval** application.
 
-1. Open the Example project in Anypoint Studio from [Anypoint Exchange](http://www.mulesoft.org/documentation/display/current/Anypoint+Exchange).
+1. Clone the git repository from [github](https://github.com/thomas-li-67/mule-examples) and open the sap-fi-data-retrieval-v1.0 project in Anypoint Studio from [Anypoint Exchange](http://www.mulesoft.org/documentation/display/current/Anypoint+Exchange).
 2. In your application in Studio, click the **Global Elements** tab. Double-click the HTTP Listener global element to open its **Global Element Properties** panel. Change the contents of the **port** field to required HTTP port e.g. 8081
 3. Go to Global Elements and open SAP Connector element. Fill in your SAP credentials.
 4. Run the application.
@@ -31,7 +36,7 @@ The APIKit console should start and the user can choose which endpoint wants to 
 
 ### How it Works
 
-The **SAP FI data retrieval** example application contains two [flows](http://www.mulesoft.org/documentation/display/current/Mule+Application+Architecture). The main flow receive user HTTP requests and using the [APIKit router](https://docs.mulesoft.com/anypoint-platform-for-apis/apikit-basic-anatomy) process them to the right flow.
+The **SAP FI data retrieval** example application contains two flows. The main flow receive user HTTP requests and using the APIKit routing to the right flow.
 
 
 ### get:/accounts:sap-api-config
