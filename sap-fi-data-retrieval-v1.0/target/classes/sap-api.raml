@@ -1,0 +1,25 @@
+#%RAML 0.8
+title: SAP-Data-Search
+version: v1
+baseUri: http://localhost:8081/api
+              
+/accounts:
+  get:
+    description: "Return a list of accounts"
+    queryParameters:
+      company_code:
+        description: "Define that company code"     
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "account_list": [
+                {
+                  "COMP_CODE": "1780",
+                  "GL_ACCOUNT": "1002010110",
+                  "SHORT_TEXT": "LT Payable -Other",
+                  "LONG_TEXT": "Long-term Payable - other"                 
+                }]
+              }              
