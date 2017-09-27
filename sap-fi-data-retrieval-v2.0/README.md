@@ -47,7 +47,10 @@ At the beginning, using the [DataWeave transformer](https://docs.mulesoft.com/mu
 Next, the [SAP connector](https://docs.mulesoft.com/mule-user-guide/v/3.8/sap-connector) is used to retrieve the data using the BAPI - BAPI_GL_ACC_GETLIST. 
 Finally, the response from SAP is transformed by DataWeave transformer into JSON structure and sent back to HTTP. 
 
+### Flow
 
+
+ ![image](https://github.com//thomas-li-67/mule-examples/raw/master/resources/images/sap-fi-data-retrieval-v2.0.png)
 
 ### Next
 
