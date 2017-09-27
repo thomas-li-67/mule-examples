@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="Router" raml="sap-api.raml" consoleEnabled="true" consolePath="console" keepRamlBaseUri="false" doc:name="Router">
+        <apikit:flow-mapping resource="/accounts" action="get" flow-ref="get:/accounts:sap-api-config"/>
+    </apikit:config>
+    <sap:connector name="SAPConnection" jcoAsHost="10.8.5.36" jcoUser="lizh" jcoPasswd="li671122" jcoSysnr="00" jcoClient="180" jcoLang="ZH" validateConnections="true" doc:name="SAP"/>
+    <flow name="sap-fi-data-retrieval-v1.0Flow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="Router" doc:name="APIkit Router"/>
+    </flow>
+    <flow name="get:/accounts:sap-api-config">
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	"BAPI_GL_ACC_GETLIST": {
+		import: {
+			"COMPANYCODE": inboundProperties."http.query.params"."company_code"			
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <sap:outbound-endpoint outputXml="true" responseTimeout="10000" doc:name="get chart of accounts" exchange-pattern="request-response" connector-ref="SAPConnection" functionName="BAPI_GL_ACC_GETLIST" type="function"/>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+accounts: 
+	payload."BAPI_GL_ACC_GETLIST".tables."ACCOUNT_LIST".*row map {
+		($$):$
+	} when (payload."BAPI_GL_ACC_GETLIST".tables.ACCOUNT_LIST != "") otherwise { message:"No data found."} ]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+</mule>
