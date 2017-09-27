@@ -15,9 +15,17 @@ http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee
         <apikit:flow-mapping resource="/accounts" action="get" flow-ref="get:/accounts:sap-api-config"/>
     </apikit:config>
     <sap:connector name="SAPConnection" jcoAsHost="10.8.5.36" jcoUser="lizh" jcoPasswd="li671122" jcoSysnr="00" jcoClient="180" jcoLang="ZH" validateConnections="true" doc:name="SAP"/>
-    <flow name="sap-fi-data-retrieval-v1.0Flow">
+    <apikit:mapping-exception-strategy name="sap-fi-data-retrieval-v2.0Mapping_Exception_Strategy">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException"/>
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Request resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+    <flow name="sap-fi-data-retrieval-v2.0Flow">
         <http:listener config-ref="HTTP_Listener_Configuration" path="api/*" doc:name="HTTP"/>
         <apikit:router config-ref="Router" doc:name="APIkit Router"/>
+        <exception-strategy ref="sap-fi-data-retrieval-v2.0Mapping_Exception_Strategy" doc:name="Reference Exception Strategy"/>
     </flow>
     <flow name="get:/accounts:sap-api-config">
         <dw:transform-message doc:name="Transform Message">
