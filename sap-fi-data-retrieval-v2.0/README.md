@@ -50,7 +50,8 @@ Finally, the response from SAP is transformed by DataWeave transformer into JSON
 ### Flow
 
 
- ![image](https://github.com//thomas-li-67/mule-examples/raw/master/resources/images/sap-fi-data-retrieval-v2.0.png)
+ ![image](https://github.com//thomas-li-67/mule-examples/raw/master/resources/images/sap-fi-data-retrieval-v2.0-1.png)
+ ![image](https://github.com//thomas-li-67/mule-examples/raw/master/resources/images/sap-fi-data-retrieval-v2.0-2.png)
 
 ### Next
 
